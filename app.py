@@ -111,7 +111,7 @@ def process_image(image_path):
                 char_x.append(x)
                 char_x_ind[x] = ind
 
-        # Character recognition
+       # Character recognition
         char_x = sorted(char_x)
         first_line = ""
         second_line = ""
@@ -132,13 +132,32 @@ def process_image(image_path):
                 first_line = first_line + strCurrentChar
             else:
                 second_line = second_line + strCurrentChar
+        
+        # Combine and format detected license plates
+        combined_plate = first_line + second_line
 
-        if any(char.isdigit() for char in first_line + second_line):
-            detected_plates.append(f"Biển số {n}: {first_line} {second_line}")
+        # Apply rules for formatting Vietnamese license plates
+        if len(combined_plate) >= 8 and combined_plate[-5:].isdigit():
+            # Rule for 5-digit plates (e.g., 60-F4 273.44)
+            formatted_plate = f"{combined_plate[:-5]} {combined_plate[-5:-2]}.{combined_plate[-2:]}"
+        elif len(combined_plate) >= 7 and combined_plate[-4:].isdigit():
+            # Rule for 4-digit plates (e.g., 60-F4 2734)
+            formatted_plate = f"{combined_plate[:-4]} {combined_plate[-4:]}"
+        else:
+            formatted_plate = combined_plate
+
+        if any(char.isdigit() for char in formatted_plate):
+            detected_plates.append(f"Biển số {n}: {formatted_plate}")
             n += 1
 
+        # Display all detected license plates in the result_label
+        if detected_plates:
+            result_text = "\n".join(detected_plates)
+            result_label.config(text=result_text)
+        else:
+            result_label.config(text="Không tìm thấy biển số nào.")
     # Display original image in the UI
-    original_img_resized = cv2.resize(original_img, (640, 480))
+    original_img_resized = cv2.resize(original_img, (640, 640))
     original_img_rgb = cv2.cvtColor(original_img_resized, cv2.COLOR_BGR2RGB)
     original_img_pil = Image.fromarray(original_img_rgb)
     original_img_tk = ImageTk.PhotoImage(original_img_pil)
@@ -147,7 +166,7 @@ def process_image(image_path):
     original_image_label.image = original_img_tk
 
     # Display recognized image in the UI
-    img_resized = cv2.resize(img, (640, 480))
+    img_resized = cv2.resize(img, (640, 640))
     img_rgb = cv2.cvtColor(img_resized, cv2.COLOR_BGR2RGB)
     img_pil = Image.fromarray(img_rgb)
     img_tk = ImageTk.PhotoImage(img_pil)
@@ -155,12 +174,7 @@ def process_image(image_path):
     recognized_image_label.config(image=img_tk)
     recognized_image_label.image = img_tk
 
-    # Display all detected license plates in the result_label
-    if detected_plates:
-        result_text = "\n".join(detected_plates)
-        result_label.config(text=result_text)
-    else:
-        result_label.config(text="Không tìm thấy biển số nào.")
+  
 
 def select_image():
     file_path = filedialog.askopenfilename(filetypes=[("Image files", "*.jpg *.jpeg *.png")])
@@ -189,10 +203,23 @@ image_frame = Frame(root, bg="white")
 image_frame.pack(pady=10)
 
 # Labels for displaying images
-original_image_label = Label(image_frame, text="Ảnh Gốc", font=("Inter", 18), fg ="#00567E" ,bg="#DCF4FF")
+original_image_label = Label(
+    image_frame,
+    text="Ảnh Gốc",
+    font=("Inter", 18),
+    fg="#00567E",
+    bg="#DCF4FF",
+)
 original_image_label.pack(side=LEFT, padx=10)
 
-recognized_image_label = Label(image_frame, text="Ảnh sau khi nhận diện", font=("Inter", 18), fg ="#00567E" ,bg="#DCF4FF")
+recognized_image_label = Label(
+    image_frame,
+    text="Ảnh sau khi nhận diện",
+    font=("Inter", 18),
+    fg="#00567E",
+    bg="#DCF4FF",
+
+)
 recognized_image_label.pack(side=RIGHT, padx=10)
 
 # Label for displaying results
