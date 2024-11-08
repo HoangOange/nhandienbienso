@@ -5,6 +5,7 @@ from tkinter import *
 from tkinter import filedialog
 from PIL import Image, ImageTk
 import Preprocess
+import Video_test2 
 
 ADAPTIVE_THRESH_BLOCK_SIZE = 19
 ADAPTIVE_THRESH_WEIGHT = 9
@@ -174,7 +175,11 @@ def process_image(image_path):
     recognized_image_label.config(image=img_tk)
     recognized_image_label.image = img_tk
 
-  
+def open_file():
+    file_path = filedialog.askopenfilename()
+    if file_path:
+        Video_test2.run_video(file_path)
+
 
 def select_image():
     file_path = filedialog.askopenfilename(filetypes=[("Image files", "*.jpg *.jpeg *.png")])
@@ -221,6 +226,8 @@ recognized_image_label = Label(
 
 )
 recognized_image_label.pack(side=RIGHT, padx=10)
+video_frame_label = Label(root, text="Khung Video", font=("Inter", 18), fg="#00567E", bg="#DCF4FF")
+video_frame_label.pack(pady=10)
 
 # Label for displaying results
 result_label = Label(root, text="", font=("Inter", 18), bg="#DCF4FF", fg="#00567E")
@@ -229,6 +236,9 @@ result_label.pack(pady=10)
 # Button to select image
 select_button = Button(root, text="Chọn ảnh biển số", command=select_image, bg="#96DEFF", fg="#DCF4FF")
 select_button.pack(pady=20)
+select_button = Button(root, text="Chọn video biển số", command=open_file, bg="#96DEFF", fg="#DCF4FF")
+select_button.pack(pady=20)
+
 
 # Start UI loop
 root.mainloop()
