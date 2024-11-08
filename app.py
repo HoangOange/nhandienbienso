@@ -226,8 +226,7 @@ recognized_image_label = Label(
 
 )
 recognized_image_label.pack(side=RIGHT, padx=10)
-video_frame_label = Label(root, text="Khung Video", font=("Inter", 18), fg="#00567E", bg="#DCF4FF")
-video_frame_label.pack(pady=10)
+
 
 # Label for displaying results
 result_label = Label(root, text="", font=("Inter", 18), bg="#DCF4FF", fg="#00567E")
