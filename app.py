@@ -232,11 +232,35 @@ recognized_image_label.pack(side=RIGHT, padx=10)
 result_label = Label(root, text="", font=("Inter", 18), bg="#DCF4FF", fg="#00567E")
 result_label.pack(pady=10)
 
-# Button to select image
-select_button = Button(root, text="Chọn ảnh biển số", command=select_image, bg="#96DEFF", fg="#DCF4FF")
-select_button.pack(pady=20)
-select_button = Button(root, text="Chọn video biển số", command=open_file, bg="#96DEFF", fg="#DCF4FF")
-select_button.pack(pady=20)
+# Tạo Frame để chứa 2 nút
+button_frame = Frame(root, bg="#DCF4FF")  # Khung nền có màu giống với nút
+button_frame.pack(side="bottom", pady=20)  # Đặt ở dưới cùng
+
+# Nút chọn ảnh biển số
+select_button_image = Button(
+    button_frame,
+    text="Chọn ảnh biển số",
+    command=select_image,
+    bg="#96DEFF",
+    fg="#017DB7",
+    font=("Arial", 14),
+    width=15,
+    height=2
+)
+select_button_image.pack(side="left", padx=10)  # Đặt bên trái, cách nút bên cạnh một khoảng
+
+# Nút chọn video biển số
+select_button_video = Button(
+    button_frame,
+    text="Chọn video biển số",
+    command=open_file,
+    bg="#96DEFF",
+    fg="#017DB7",
+    font=("Arial", 14),
+    width=15,
+    height=2
+)
+select_button_video.pack(side="left", padx=10)  # Đặt bên phải, cách nút bên cạnh một khoảng
 
 
 # Start UI loop

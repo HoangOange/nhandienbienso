@@ -133,18 +133,18 @@ def run_video(video_path):
                             second_line += strCurrentChar
 
                     strFinalString = first_line + second_line
-                    print("\n License Plate " + str(n) + " is: " + first_line + " - " + second_line + "\n")
+                    print("\n Biển số  " + str(n) + " là: " + first_line + " - " + second_line + "\n")
                     cv2.putText(img, strFinalString, (topy, topx), cv2.FONT_HERSHEY_DUPLEX, 1, (0, 255, 255), 1)
                     n += 1
                     biensotimthay += 1
 
         imgcopy = cv2.resize(img, None, fx=0.5, fy=0.5)
-        cv2.imshow('License plate', imgcopy)
-        print("Number of plates found:", biensotimthay)
-        print("Total frames:", tongframe)
-        print("Plate found rate:", 100 * biensotimthay / (368), "%")
+        cv2.imshow('Doc bien so tu video', imgcopy)
+        print("Tổng số biển số được tìm thấy (theo từng frame):", biensotimthay)
+        print("Tổng frame đã đọc :", tongframe)
+        print("Tỉ lệ tìm được biển số:", 100 * biensotimthay / (368), "%")
 
-        if cv2.waitKey(1) & 0xFF == ord('q'):
+        if cv2.waitKey(1) != -1:  # Kiểm tra nếu phím bất kỳ được nhấn
             break
 
     cap.release()
