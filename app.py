@@ -204,7 +204,7 @@ label_group = Label(root, text="Môn: Xử lý thị giác máy tính - GHVH: Tr
 label_group.pack(pady=10)
 
 # Frame for images
-image_frame = Frame(root, bg="white")
+image_frame = Frame(root, bg="#DCF4FF")
 image_frame.pack(pady=10)
 
 # Labels for displaying images
